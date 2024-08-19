@@ -1,0 +1,375 @@
+% ===========================
+% Macro para Nombre Completo
+% ===========================
+% Este macro coloca el nombre completo en la parte superior del CV
+% El primer argumento es para el nombre y el segundo para el apellido
+\newcommand{\NombreCompleto}[2]{
+	\node[above right] at ($(NW)+(\lm,-1.5)$) {
+		\Large\bfseries 							% Estilo de fuente grande y en negrita
+		{\color{ColorSecundario} #1} 				% Primer nombre en ColorSecundario
+		{\color{white} #2} 							% Apellido en blanco
+	};
+}
+
+% ===============================================================================================================
+
+% ===========================
+% Macro para Perfil
+% ===========================
+% Esta macro coloca el perfil en la parte superior del CV.
+% El argumento #1 es el texto del perfil.
+\newcommand{\Perfil}[1]{
+	\node[white, below right] at ($(NW)+(\lm,-1.75)$) {
+		\begin{minipage}{0.62\paperwidth} 					% Define un ancho para el texto
+			{\large\bfseries PERFIL}\\ 						% Título "PERFIL" en grande y negrita
+			#1 												% Texto del perfil proporcionado como argumento
+		\end{minipage}
+	};
+}
+
+% ===============================================================================================================
+
+% ===========================
+% Macro para Imagen de Perfil
+% ===========================
+% Esta macro coloca una imagen de perfil recortada en un círculo con un marco alrededor.
+% El argumento #1 es el nombre del archivo de la imagen.
+% El argumento #2 es la escala de la imagen (por ejemplo, 4cm).
+\newcommand{\PerfilImagen}[2]{
+	% Definir el radio del círculo basado en la escala
+	\def\perfilradius{2.25cm}
+	
+	\begin{scope}
+		% Recortar la imagen en un círculo
+		\clip ($(NW)+(0.5*\lm,-0.5*\tm)$) circle [radius=\perfilradius];
+		
+		% Insertar la imagen centrada
+		\node[inner sep=0pt] at ($(NW)+(0.5*\lm,-0.5*\tm)$) {\includegraphics[width=#2]{#1}};
+	\end{scope}
+	
+	% Dibujar el marco alrededor de la imagen
+	\draw[ColorSecundario, line width=1mm] ($(NW)+(0.5*\lm,-0.5*\tm)$) circle [radius=\perfilradius];
+}
+
+% ===============================================================================================================
+
+% ===========================
+% Macro para Profesión
+% ===========================
+% Esta macro coloca una franja dorada en la parte superior del CV con el texto centrado.
+% El argumento #1 es el texto de la profesión o dedicación.
+\newcommand{\Profesion}[1]{
+	\fill[ColorSecundario] 
+	($(NO)+(-4.5,-\tm)$) -- ++(0,0.5) 									% Línea vertical hacia abajo
+	arc[start angle=180, end angle=90, radius=0.5] 						% Curva en la esquina superior derecha
+	-- ++(9,0) 															% Línea horizontal derecha
+	-- ++(0,0) 															% Extensión horizontal derecha (se puede omitir si es innecesario)
+	arc[start angle=90, end angle=0, radius=0.5] 						% Curva en la esquina superior izquierda
+	-- ++(0,-0.5) 														% Línea vertical hacia abajo
+	-- ++(-9,0) 														% Línea horizontal inferior hacia la izquierda
+	-- cycle; 															% Cierra la figura
+	
+	%% Texto centrado en la franja
+	\node[white] at ($(NO)+({0.5},{0.5-\tm})$) {\bfseries\large #1};
+}
+
+% ===============================================================================================================
+% ===============================================================================================================
+
+% ===========================
+% Macro para Contacto
+% ===========================
+\newcommand{\Contacto}[5]{
+	% Dibuja la caja redondeada para el título de "CONTACTO"
+	\draw[ColorSecundario, line width=0.5mm] 
+	($(#1)+(-0.1,-#2)$) -- ++(6,0) 
+	arc[start angle=90, end angle=-90, radius=0.5] 
+	-- ++(-6,0) -- cycle;
+	
+	% Icono de información dentro de la caja de "CONTACTO"
+	\node[ColorSecundario] at ($(#1)+(0.75,{-#2-0.5})$) {\Large\faInfoCircle};
+	
+	% Texto "CONTACTO" al lado del icono de información
+	\node[white, right] at ($(#1)+(1.25,{-#2-0.5})$) {\Large\bfseries CONTACTO};
+	
+	% Íconos de contacto con bordes circulares y su información
+	\node[white, draw=ColorSecundario, circle, line width=0.5mm, minimum size=1cm, inner sep=1pt] 
+	at ($(#1)+(0.75,-2-#2)$) {\Large\faPhone}; 															% Teléfono
+	\node[white, right] at ($(#1)+(1.5,-2-#2)$) {
+		\begin{minipage}{5cm}
+			{\bfseries TELÉFONO}\\
+			#3
+		\end{minipage}
+	};
+	\node[white, draw=ColorSecundario, circle, line width=0.5mm, minimum size=1cm, inner sep=1pt] 
+	at ($(#1)+(0.75,-3.25-#2)$) {\Large\faEnvelopeO}; 													% Correo
+	\node[white, right] at ($(#1)+(1.5,-3.5-#2)$) {
+		\begin{minipage}{5cm}
+			{\bfseries E-mail:}\\
+			\href{E-mail:#4}{\textcolor{white}{#4}}  												% Hacer el correo clicable y en color blanco
+		\end{minipage}
+	};
+	\node[white, draw=ColorSecundario, circle, line width=0.5mm, minimum size=1cm, inner sep=1pt] 
+	at ($(#1)+(0.75,-4.5-#2)$) {\Large\faMapMarker}; 													% Dirección
+	\node[white, right] at ($(#1)+(1.5,-4.75-#2)$) {
+		\begin{minipage}{5cm}
+			{\bfseries DIRECCIÓN:}\\
+			#5
+		\end{minipage}
+	};
+}
+
+% ===============================================================================================================
+
+% ===========================
+% Macro para Competencias
+% ===========================
+% Esta macro crea la sección de competencias en la parte izquierda del CV.
+\newcommand{\Competencias}[3]{
+	% Dibuja la caja redondeada para el título de "COMPETENCIAS"
+	\draw[ColorSecundario, line width=0.5mm] 
+	($(#1)+(-0.1,-#2)$) -- ++(6,0) 
+	arc[start angle=90, end angle=-90, radius=0.5] 
+	-- ++(-6,0) -- cycle;
+	
+	% Ícono de engranajes para "COMPETENCIAS"
+	\node[ColorSecundario] at ($(#1)+(0.75,{-#2-0.5})$) {\Large\faStar };
+	
+	% Texto "COMPETENCIAS" al lado del ícono de engranajes
+	\node[white, right] at ($(#1)+(1.25,{-#2-0.5})$) {\large\bfseries COMPETENCIAS};
+	
+	% Lista de competencias
+	\node[white, below right] at ($(#1)+(0,{-#2-0.5-0.75})$) {
+		\begin{minipage}{6cm}
+			\begin{itemize}[topsep=0pt,itemsep=3pt,partopsep=0pt,parsep=0pt]
+				#3
+			\end{itemize}
+		\end{minipage}
+	};
+}
+
+% ===============================================================================================================
+
+% ===========================
+% Macro para Idiomas
+% ===========================
+% Esta macro crea la sección de idiomas en la parte izquierda del CV.
+\newcommand{\Idiomas}[3]{
+	% Dibuja la caja redondeada para el título de "IDIOMAS"
+	\draw[ColorSecundario, line width=0.5mm] 
+	($(#1)+(-0.1,-#2)$) -- ++(6,0) 
+	arc[start angle=90, end angle=-90, radius=0.5] 
+	-- ++(-6,0) -- cycle;
+	
+	% Ícono de idioma para "IDIOMAS"
+	\node[ColorSecundario] at ($(#1)+(0.75,{-#2-0.5})$) {\Large\faLanguage};
+	
+	% Texto "IDIOMAS" al lado del ícono de idioma
+	\node[white, right] at ($(#1)+(1.25,{-#2-0.5})$) {\Large\bfseries IDIOMAS};
+	
+	% Lista de idiomas
+	\node[white, below right] at ($(#1)+(0,{-#2-0.5-0.75})$) {
+		\begin{minipage}{6cm}
+			\begin{itemize}[topsep=0pt,itemsep=3pt,partopsep=0pt,parsep=0pt]
+				#3
+			\end{itemize}
+		\end{minipage}
+	};
+}
+
+% ===============================================================================================================
+
+% ===========================
+% Macro para Herramientas
+% ===========================
+% Esta macro crea la sección de herramientas en la parte izquierda del CV.
+\newcommand{\Herramientas}[3]{
+	% Dibuja la caja redondeada para el título de "HERRAMIENTAS"
+	\draw[ColorSecundario, line width=0.5mm] 
+	($(#1)+(-0.1,-#2)$) -- ++(6,0) 
+	arc[start angle=90, end angle=-90, radius=0.5] 
+	-- ++(-6,0) -- cycle;
+	
+	% Ícono para "HERRAMIENTAS"
+	\node[ColorSecundario] at ($(#1)+(0.75,{-#2-0.5})$) {\Large\faWrench};
+	
+	% Texto "HERRAMIENTAS" al lado del ícono
+	\node[white, right] at ($(#1)+(1.25,{-#2-0.5})$) {\large\bfseries HERRAMIENTAS};
+	
+	% Lista de herramientas
+	\node[white, below right] at ($(#1)+(0,{-#2-0.5-0.75})$) {
+		\begin{minipage}{6cm}
+			\begin{itemize}[topsep=0pt,itemsep=3pt,partopsep=0pt,parsep=0pt]
+				#3
+			\end{itemize}
+		\end{minipage}
+	};
+}
+
+
+% ===============================================================================================================
+
+% ===========================
+% Macro para Intereses Personales
+% ===========================
+% Esta macro crea la sección de intereses en la parte izquierda del CV.
+\newcommand{\Intereses}[3]{
+	% Dibuja la caja redondeada para el título de "INTERESES"
+	\draw[ColorSecundario, line width=0.5mm] 
+	($(#1)+(-0.1,-#2)$) -- ++(6,0) 
+	arc[start angle=90, end angle=-90, radius=0.5] 
+	-- ++(-6,0) -- cycle;
+	
+	% Ícono de corazón con latido para "INTERESES"
+	\node[ColorSecundario] at ($(#1)+(0.75,{-#2-0.5})$) {\Large\faSmileO};
+	
+	% Texto "INTERESES" al lado del ícono de corazón
+	\node[white, right] at ($(#1)+(1.25,{-#2-0.5})$) {\Large\bfseries INTERESES};
+	
+	% Lista de intereses
+	\node[white, below right] at ($(#1)+(0,{-#2-0.5-0.75})$) {
+		\begin{minipage}{6cm}
+			\begin{itemize}[topsep=0pt,itemsep=3pt,partopsep=0pt,parsep=0pt]
+				#3
+			\end{itemize}
+		\end{minipage}
+	};
+}
+
+% ===============================================================================================================
+% ===============================================================================================================
+
+% ===========================
+% Macro para Formacion
+% ===========================
+% Esta macro crea la sección de educación en la parte derecha del CV con múltiples ítems.
+\newcommand{\Experiencia}[2]{
+	% Dibuja la caja redondeada para el título de "EXPERIENCIA"
+	\def\abajo{#1}
+	\draw[ColorPrimario, line width=0.5mm] ($(A)+(0,-\abajo)$) -- ++(8.5,0) arc[start angle=90, end angle=-90, radius=0.5] -- ++(-9,0) -- cycle;
+	
+	% Ícono para "EXPERIENCIA"
+	\node[ColorPrimario] at ($(A)+(0.75,{-\abajo-0.5})$) {\Large\faSuitcase};
+	
+	% Texto "EXPERIENCIA" al lado del ícono
+	\node[ColorPrimario, right] at ($(A)+(1.25,{-\abajo-0.5})$) {\Large\bfseries EXPERIENCIA};
+	
+	% Detalle de la experiencia
+	\node[ColorPrimario, below right] at ($(A)+(0.5,{-\abajo-1.25})$) {
+		\begin{minipage}{0.6\paperwidth}
+			#2
+		\end{minipage}
+	};
+}
+
+
+% ===========================
+% Macro para Formacion
+% ===========================
+% Esta macro crea la sección de educación en la parte derecha del CV con múltiples ítems.
+\newcommand{\Formacion}[2]{
+	% Dibuja la caja redondeada para el título de "FORMACION"
+	\def\abajo{#1}
+	\draw[ColorPrimario, line width=0.5mm] ($(A)+(0,-\abajo)$) -- ++(8.5,0) arc[start angle=90, end angle=-90, radius=0.5] -- ++(-9,0) -- cycle;
+	
+	% Ícono para "FORMACION"
+	\node[ColorPrimario] at ($(A)+(0.75,{-\abajo-0.5})$) {\Large\faGraduationCap};
+	
+	% Texto "EDUCACION" al lado del ícono
+	\node[ColorPrimario, right] at ($(A)+(1.25,{-\abajo-0.5})$) {\Large\bfseries FORMACION};
+	
+	% Detalle de la formacion
+	\node[ColorPrimario, below right] at ($(A)+(0.5,{-\abajo-1.25})$) {
+		\begin{minipage}{0.6\paperwidth}
+			#2
+		\end{minipage}
+	};
+}
+
+
+% ===========================
+% Macro para Certificaciones
+% ===========================
+% Esta macro crea la sección de certificaciones en la parte derecha del CV con múltiples ítems.
+\newcommand{\Certificaciones}[3]{
+	% Dibuja la caja redondeada para el título de "CERTIFICADOS"
+	\def\abajo{#2}
+	\draw[ColorPrimario, line width=0.5mm] 
+	($(#1)+(0,-\abajo)$) -- ++(8.5,0) 
+	arc[start angle=90, end angle=-90, radius=0.5] 
+	-- ++(-9,0) -- cycle;
+	
+	% Ícono para "CERTIFICADOS"
+	\node[ColorPrimario] at ($(#1)+(0.75,{-\abajo-0.5})$) {\Large\faCertificate};
+	
+	% Texto "CERTIFICADOS" al lado del ícono
+	\node[ColorPrimario, right] at ($(#1)+(1.25,{-\abajo-0.5})$) {\Large\bfseries CERTIFICADOS};
+	
+	% Lista de certificaciones
+	\node[ColorPrimario, below right] at ($(#1)+(0.5,{-\abajo-1.25})$) {
+		\begin{minipage}{0.6\paperwidth}
+			\begin{itemize}[topsep=0pt,itemsep=3pt,partopsep=0pt,parsep=0pt]
+				#3
+			\end{itemize}
+		\end{minipage}
+	};
+}
+
+
+% ===========================
+% Macro para Proyectos Destacados
+% ===========================
+% Esta macro crea la sección de proyectos destacados en la parte derecha del CV con múltiples ítems.
+\newcommand{\Proyectos}[3]{
+	% Dibuja la caja redondeada para el título de "PROYECTOS"
+	\def\abajo{#2}
+	\draw[ColorPrimario, line width=0.5mm] 
+	($(#1)+(0,-\abajo)$) -- ++(8.5,0) 
+	arc[start angle=90, end angle=-90, radius=0.5] 
+	-- ++(-9,0) -- cycle;
+	
+	% Ícono para "PROYECTOS"
+	\node[ColorPrimario] at ($(#1)+(0.75,{-\abajo-0.5})$) {\Large\faListAlt};
+	
+	% Texto "PROYECTOS" al lado del ícono
+	\node[ColorPrimario, right] at ($(#1)+(1.25,{-\abajo-0.5})$) {\Large\bfseries PROYECTOS};
+	
+	% Lista de proyectos destacados
+	\node[ColorPrimario, below right] at ($(#1)+(0.5,{-\abajo-1.25})$) {
+		\begin{minipage}{0.6\paperwidth}
+			\begin{itemize}[topsep=0pt,itemsep=3pt,partopsep=0pt,parsep=0pt]
+				#3
+			\end{itemize}
+		\end{minipage}
+	};
+}
+
+% ===========================
+% Macro para Voluntariado
+% ===========================
+% Esta macro crea la sección de voluntariado en la parte derecha del CV con múltiples ítems.
+\newcommand{\Voluntariado}[3]{
+	% Dibuja la caja redondeada para el título de "VOLUNTARIADOS"
+	\def\abajo{#2}
+	\draw[ColorPrimario, line width=0.5mm] 
+	($(#1)+(0,-\abajo)$) -- ++(8.5,0) 
+	arc[start angle=90, end angle=-90, radius=0.5] 
+	-- ++(-9,0) -- cycle;
+	
+	% Ícono para "VOLUNTARIADOS"
+	\node[ColorPrimario] at ($(#1)+(0.75,{-\abajo-0.5})$) {\Large\faGroup};
+	
+	% Texto "VOLUNTARIADOS" al lado del ícono
+	\node[ColorPrimario, right] at ($(#1)+(1.25,{-\abajo-0.5})$) {\Large\bfseries VOLUNTARIADOS};
+	
+	% Lista de voluntariados
+	\node[ColorPrimario, below right] at ($(#1)+(0.5,{-\abajo-1.25})$) {
+		\begin{minipage}{0.6\paperwidth}
+			\begin{itemize}[topsep=0pt,itemsep=3pt,partopsep=0pt,parsep=0pt]
+				#3
+			\end{itemize}
+		\end{minipage}
+	};
+}
+
+

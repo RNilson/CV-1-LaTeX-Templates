@@ -1,0 +1,328 @@
+% ======================================
+% Autor del documento
+% ======================================
+% Nombre: Ronald Nilson Calderon Alvarez
+% Correo: ronalnilsonemc2@gmail.com
+% =====================================
+
+% Define el tipo de documento y el tamaño de papel
+\documentclass[12pt,a4paper]{article} 
+
+% Configura los márgenes del documento
+\usepackage[left=0cm, 
+			right=0cm, 
+			top=0in, 
+			bottom=0cm]{geometry} 
+
+% Permite la inclusión de gráficos y figuras en el documento
+\usepackage{graphicx} 
+
+% Define y maneja colores personalizados en el documento
+\usepackage{xcolor} 
+
+% Maneja el idioma del documento (por defecto, configurado en español)
+\usepackage{babel} 
+
+% Personaliza listas y controla el espaciado entre ítems
+\usepackage{enumitem} 
+
+% Permite crear enlaces clicables (correo, URL, etc.) y manejar hipervínculos
+\usepackage[colorlinks=true, 
+			linkcolor=white, 
+			urlcolor=white, 
+			citecolor=white, 
+			filecolor=white, 
+			hidelinks]{hyperref} 
+
+% Paquete principal para dibujar gráficos y personalizar el layout del documento
+\usepackage{tikz} 
+
+% Librerías adicionales de TikZ para cálculos y posicionamiento avanzado
+\usetikzlibrary{babel, 
+				calc, 
+				positioning} 
+
+% Permite utilizar fuentes del sistema en LuaLaTeX o XeLaTeX
+\usepackage{fontspec} 
+
+% Permite el uso de íconos modernos en el documento
+\usepackage{fontawesome} 
+
+% Define 'Verdana' como la fuente principal del documento
+\setmainfont{Verdana} 
+
+% Define el color primario usando su código HTML
+\definecolor{ColorPrimario}{HTML}{016362} % Ciruela
+
+% Define el color secundario usando su código HTML
+\definecolor{ColorSecundario}{HTML}{f1b000} % Rosa Pálido
+
+% Incluye el archivo de macros personalizadas para este documento
+\input{Macros} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% NOTAS IMPORTANTES:
+%% - Este documento está configurado para compilarse en LuaLaTeX.
+%% - Si desea cambiar los íconos de FontAwesome, puede encontrar la lista completa de íconos %% disponibles en el sitio de CTAN o ingresando al siguiente link:
+%% https://mirrors.ibiblio.org/CTAN/fonts/fontawesome/doc/fontawesome.pdf
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+	\pagestyle{empty}
+	\begin{tikzpicture}[remember picture, overlay]
+		
+		%% ==========================
+		%% CONFIGURACIÓN DE FONDO Y COORDENADAS CLAVE
+		%% ==========================
+		%% ADVERTENCIA:
+		%% Los siguientes parámetros son fundamentales para la correcta visualización del diseño de la plantilla.
+		%% Modificarlos podría causar errores en el diseño del documento.
+		%% Por favor, no modifiques estos valores a menos que sepas exactamente lo que estás haciendo.
+		%% ==========================
+		
+		\def\lm{7}  									% Margen izquierdo
+		\def\tm{7}  									% Margen superior	
+		\coordinate (NW) at (current page.north west);  % Esquina superior izquierda de la página
+		\coordinate (SE) at (current page.south east);  % Esquina inferior derecha de la página
+		\coordinate (NO) at (current page.north);       % Centro superior de la página
+		\coordinate (A) at ($(NW)+(\lm,-\tm)$);         % Punto ajustado para el fondo blanco
+		\coordinate (B) at ($(NW)+(0,-\tm)$);           % Punto para la línea divisoria
+		
+		% Dibujar el fondo primario en la página completa
+		\fill[ColorPrimario] (NW) rectangle (SE);
+		
+		% Dibujar el fondo blanco que cubre la parte derecha de la página
+		\fill[white] (A) rectangle (SE);
+		
+		% Dibujar la línea divisoria en el borde superior del fondo blanco
+		\draw[ColorSecundario, line width=1mm] (B) -- ++(\paperwidth,0);
+		
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		
+		%% NOMBRE COMPLETO %%
+		\NombreCompleto{
+			% Ingrese su nombre completo
+			ANNE JACQUELINE						
+			}{
+			% Ingrese su apellido completo
+			HATHAWAY					
+			}
+		
+		%% PERFIL %%
+		% Aquí se inserta la descripción del perfil
+		\Perfil{
+			% Descripción general del perfil profesional
+			Soy una actriz de cine y teatro con más de 20 años de experiencia en la industria. He trabajado en una amplia gama de géneros, desde comedia y drama hasta ciencia ficción, ganando reconocimiento internacional y premios por mi versatilidad y compromiso con el arte de la interpretación.			
+		}
+		
+		%% IMAGEN DE PERFIL %%
+		% Inserta la imagen de perfil recortada en un círculo
+		\PerfilImagen{
+		% Nombre del archivo de la imagen de perfil
+			Perfil.png       
+		}{
+		% Tamaño o escala de la imagen de perfil
+			5cm              
+		}
+		
+		%% PROFESIÓN %%
+		% Inserta la franja dorada con el título de la profesión
+		\Profesion{
+		% Título de la profesión o dedicación
+			Actriz de Cine y Teatro  
+		}
+		
+		
+		% =========================================
+		%  Sección Izquierda (Parte Oscura) del CV 
+		% =========================================
+		
+		%% SECCIÓN CONTACTO %%
+		% Aquí se inserta la información de contacto
+		\Contacto	
+		% Coordenada para la posición de la sección (No modificar)
+		{B}          
+		% Posición vertical en la sección (Modificar si es necesaario)		
+		{0.5}        		
+		{
+		% Número de teléfono
+			(+1) 123 456 7890  		
+		}{
+		% Correo electrónico
+			annehathaway@example.com  	
+		}{
+		% Dirección
+			Los Ángeles, California, USA  	
+		}
+		
+		%% SECCIÓN COMPETENCIAS TÉCNICAS %%
+		% Inserta las competencias técnicas
+		\Competencias	
+		% Coordenada para la posición de la sección (No modificar)
+		{B} 			
+		% Posición vertical en la sección (Modificar si es necesaario)
+		{6.5}       	
+		{
+		% Competencia técnica 1
+			\item Actuación de Método          		
+		% Competencia técnica 2
+			\item Improvisación        
+		% Competencia técnica 3  		
+			\item Interpretación de Personajes    
+		% Competencia técnica 4 		
+			\item Trabajo en Conjunto    		
+		}
+		
+		%% SECCIÓN IDIOMAS %%
+		% Inserta los idiomas dominados
+		\Idiomas
+		% Coordenada para la posición de la sección (No modificar)
+			{B}   
+		% Posición vertical en la sección (Modificar si es necesaario)       			
+			{10.75}      			
+		{
+		% Idioma 1
+			\item Alemán    
+		% Idioma 2      		
+			\item Inglés   
+		% Idioma 3       		
+			\item Klingon         		
+		}
+		
+		%% SECCIÓN HERRAMIENTAS %%
+		% Inserta las herramientas o software dominados
+		\Herramientas	
+		% Coordenada para la posición de la sección (No modificar)
+			{B}		
+		% Posición vertical en la sección (Modificar si es necesaario)		
+			{14.25}      					
+		{
+		% Herramienta 1
+			\item Doblaje de Voz    
+		% Herramienta 2      		
+			\item Interpretación Escénica     
+		% Herramienta 3 		
+			\item Canto y Danza  
+		% Herramienta 4        		
+			\item Análisis de Guiones        		
+		}
+		
+		%% SECCIÓN INTERESES PERSONALES %%
+		% Inserta los intereses personales
+		\Intereses	
+		% Coordenada para la posición de la sección (No modificar)
+		{B}		
+		% Posición vertical en la sección (Modificar si es necesaario)			
+		{19}				
+		{
+		% Interés 1
+			\item Activismo Social     
+		% Interés 2   		
+			\item Lectura de Clásicos           		
+		}
+		
+		% =================================================
+		%  Sección Derecha (Parte Blanca) del CV 
+		% =================================================
+		
+		%% SECCION EXPERIENCIA %%
+		% Aquí se inserta la experiencia
+		\Experiencia
+		% Posición vertical en la sección (Modificar si es necesaario)
+		{0.5}
+		{
+		%% Primera Experiencia
+		% Ocupacion
+			{\bfseries Actriz Principal} \quad {\color{ColorSecundario}|} 
+		% Año
+			\quad 2006 - Presente\\
+		% Lugar de experiencia
+			\emph{Hollywood, Los Ángeles}
+		% Espaciado (No modificar)
+			\vspace*{3mm}
+			
+		%% Segunda Experiencia
+		% Ocupacion
+			{\bfseries Actriz de Reparto} \quad {\color{ColorSecundario}|} 
+		% Año
+			\quad 2001 - 2005\\
+		% Lugar de experiencia
+			\emph{Broadway, Nueva York}
+		% Espaciado (No modificar)
+			\vspace*{3mm}
+		}
+		
+		%% SECCION FORMACIÓN %%
+		% Aquí se inserta la educación
+		\Formacion
+		% Posición vertical en la sección (Modificar si es necesaario)
+		{5}
+		{
+		%% Primera Formacion
+		% Grado academico
+			{\bfseries Licenciatura en Artes Escénicas} \quad {\color{ColorSecundario}|} 
+		% Año
+			\quad 1999 - 2003\\
+		% Universidad
+			\emph{Vassar College, Nueva York}
+		% Espaciado (No modificar)
+			\vspace*{3mm}
+			
+		%% Segunda Formacion
+		% Grado academico
+			{\bfseries Estudios en Interpretación Cinematográfica} \quad {\color{ColorSecundario}|} 
+		% Año
+			\quad 2004\\
+		% Universidad
+			\emph{The Barrow Group, Nueva York}
+		% Espaciado (No modificar)
+			\vspace*{3mm}
+		}
+		
+		%% SECCIÓN CERTIFICACIONES %%
+		% Aquí se inserta la certificación o reconocimiento
+		\Certificaciones
+		% Coordenada para la posición de la sección (No modificar)
+		{A}     
+		% Posición vertical en la sección (Modificar si es necesario)       	
+		{10}           	
+		{
+		% Titulo del certificado
+			\item \textbf{Premio Oscar a Mejor Actriz de Reparto:}		
+		% Descripcion del certificado
+			Por su interpretación en "Los Miserables" (2012).		
+		}
+		
+		%% PROYECTOS DESTACADOS %%
+		% Aquí se inserta información sobre proyectos destacados usando la macro \Proyectos
+		\Proyectos	
+		% Coordenada para la posición de la sección (No modificar)
+		{A}    
+		% Posición vertical en la sección (Modificar si es necesario)             
+		{14}                
+		{
+		% Titulo del proyecto
+			\item \textbf{Protagonista en "El Diablo Viste a la Moda" (2006):}	
+		% Descripcion del proyecto	
+			Interpretación de Andy Sachs, papel que la catapultó al estrellato.		
+		}
+		
+		%% VOLUNTARIADOS %%
+		% Aquí se inserta la experiencia de voluntariado
+		\Voluntariado
+		% Coordenada para la posición de la sección (No modificar)
+		{A}             
+		% Posición vertical en la sección (Modificar si es necesario)
+		{18}            
+		{
+		% Titulo del voluntariado
+			\item \textbf{Embajadora de Buena Voluntad de la ONU 2016 - Presente:} 		
+		% Descripcion del voluntariado
+			Promoción de la igualdad de género y derechos de las mujeres a nivel mundial.		
+		}
+		
+	\end{tikzpicture}
+	
+\end{document}
